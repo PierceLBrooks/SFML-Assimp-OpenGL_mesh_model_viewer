@@ -242,8 +242,8 @@
         <label>engine</label>
         <generator>
           <switch id="BUILDSTER_OS">
-            <case check="Windows">MinGW Makefiles</case>
-            <case check="Linux">Unix Makefiles</case>
+            <case check="Windows">CodeBlocks - MinGW Makefiles</case>
+            <case check="Linux">CodeBlocks - Unix Makefiles</case>
             <case check="Darwin">Xcode</case>
             <default><quit></quit></default>
           </switch>
