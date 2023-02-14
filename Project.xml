@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<buildster directory="../build" distribution="../Distribution">
+<buildster directory="build" distribution="../Distribution">
   <project directory="../Project">
     <dependencies>
       <dependency>
@@ -16,7 +16,9 @@
           </git_repo>
         </remote>
         <build>
-          <arguments></arguments>
+          <arguments>
+            <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+          </arguments>
           <cmake>
             <generator>
               <switch id="BUILDSTER_OS">
@@ -30,6 +32,10 @@
           </cmake>
         </build>
         <exports>
+          <export type="other">
+            <key>SFML_CMAKE</key>
+            <value><install></install>/share/SFML/cmake/Modules</value>
+          </export>
           <export type="all">
             <key>SFML_ROOT</key>
             <value><install></install></value>
@@ -40,7 +46,7 @@
           </export>
           <export type="libraries">
             <key>SFML_LIBRARIES</key>
-            <value><install</install>/lib</value>
+            <value><install></install>/lib</value>
           </export>
         </exports>
         <imports></imports>
@@ -51,7 +57,7 @@
         <remote>
           <url>https://github.com/TankOs/SFGUI.git</url>
           <git_repo>
-            <branch>0.1.1</branch>
+            <branch>0.2.3</branch>
             <credentials>
               <username>username</username>
               <password>password</password>
@@ -59,7 +65,11 @@
           </git_repo>
         </remote>
         <build>
-          <arguments></arguments>
+          <arguments>
+            <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DCMAKE_MODULE_PATH=<data id="SFML_CMAKE"></data></argument>
+            <argument>-DSFGUI_BUILD_EXAMPLES=false</argument>
+          </arguments>
           <cmake>
             <generator>
               <switch id="BUILDSTER_OS">
@@ -104,7 +114,9 @@
           </git_repo>
         </remote>
         <build>
-          <arguments></arguments>
+          <arguments>
+            <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+          </arguments>
           <cmake>
             <generator>
               <switch id="BUILDSTER_OS">
@@ -139,7 +151,7 @@
         <remote>
           <url>https://github.com/g-truc/glm.git</url>
           <git_repo>
-            <branch>0.9.4.6</branch>
+            <branch>0.9.9.5</branch>
             <credentials>
               <username>username</username>
               <password>password</password>
@@ -147,7 +159,10 @@
           </git_repo>
         </remote>
         <build>
-          <arguments></arguments>
+          <arguments>
+            <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DGLM_TEST_ENABLE=OFF</argument>
+          </arguments>
           <cmake>
             <generator>
               <switch id="BUILDSTER_OS">
@@ -190,7 +205,9 @@
           </git_repo>
         </remote>
         <build>
-          <arguments></arguments>
+          <arguments>
+            <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+          </arguments>
           <cmake>
             <generator>
               <switch id="BUILDSTER_OS">
@@ -233,6 +250,7 @@
         </generator>
         <definitions></definitions>
         <links>
+          <link>*IL*</link>
           <link>*assimp*</link>
           <link>*sfgui*</link>
           <link>*sfml-graphics*</link>
