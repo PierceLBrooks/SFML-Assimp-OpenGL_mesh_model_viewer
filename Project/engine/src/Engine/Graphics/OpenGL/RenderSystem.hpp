@@ -8,9 +8,6 @@
 
 namespace KG
 {
-	class KG::Renderer;
-	typedef std::shared_ptr<KG::Renderer> Renderer_SmartPtr;
-
 	/*! \class RenderSystem
 	*/
 	class RenderSystem

@@ -1,5 +1,6 @@
 #include "RenderSystem.hpp"
 #include "Renderer.hpp"
+#include "Camera.hpp"
 
 // TEMP
 #include "../../Input/InputManager.hpp"

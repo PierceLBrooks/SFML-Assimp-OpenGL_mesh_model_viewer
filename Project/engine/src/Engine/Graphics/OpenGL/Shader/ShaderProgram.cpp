@@ -130,3 +130,6 @@ namespace KG
 	}
 
 } // KG ns
+
+#include "ShaderProgram.inl"
+

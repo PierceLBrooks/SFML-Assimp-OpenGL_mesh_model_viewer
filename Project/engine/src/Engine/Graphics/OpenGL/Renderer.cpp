@@ -7,6 +7,7 @@
 #include "Shader/ShaderProgram.hpp"
 #include "Shader/ShaderFactory.hpp"
 #include "RenderSystem.hpp"
+#include "Camera.hpp"
 /* Event related. */
 #include "../../Event/EventManager.hpp"
 #include "Events.hpp"
@@ -16,8 +17,8 @@ namespace KG
 {
 	const double	Renderer::sk_DefaultAspectRatio = 1.7778;
 	const unsigned	Renderer::sk_DefaultWidth = 720;
-	const unsigned	Renderer::sk_DefaultHeight 
-		= static_cast<int>((double)Renderer::sk_DefaultWidth/Renderer::sk_DefaultAspectRatio);	
+	const unsigned	Renderer::sk_DefaultHeight
+		= static_cast<int>((double)Renderer::sk_DefaultWidth/Renderer::sk_DefaultAspectRatio);
 
 	Renderer::Renderer(void)
 		: m_CurrentAspectRatio(sk_DefaultAspectRatio)
@@ -52,7 +53,7 @@ namespace KG
 			sf::VideoMode(m_CurrentWindowWidth, m_CurrentWindowHeight)
 			, "K-Engine"
 			, sf::Style::Default
-			, sf::ContextSettings::ContextSettings(24, 8, 0, 3, 3)
+			, sf::ContextSettings(24, 8, 0, 3, 3)
 		);
 
 		glewExperimental = GL_TRUE;
@@ -62,7 +63,7 @@ namespace KG
 			std::string fail_string("Failure GLEW intialization... \n ");
 			fail_string += reinterpret_cast<const char*>(glewGetErrorString(glew_init_status));
 			KE::Debug::print(fail_string);
-			throw std::exception(fail_string.c_str());
+			throw std::runtime_error(fail_string.c_str());
 		}
 		else
 		{
@@ -112,7 +113,7 @@ namespace KG
 
 	void Renderer::PreRender(void)
 	{
-		
+
 		for (auto & list : m_RenderMap)
 			list.second.reserve(300);
 	}
@@ -130,13 +131,13 @@ namespace KG
 		{
 		for (auto & node_ptr : node_list_pair.second)
 		{
-			KG::Mesh * const mesh_ptr(static_cast<KG::Mesh*const>(node_ptr)); // crash if not mesh. TODO : proper type thing. maybe add a NodeType method into SceneNode.
+			KG::Mesh * mesh_ptr = const_cast<KG::Mesh*>(static_cast<const KG::Mesh*>(node_ptr)); // crash if not mesh. TODO : proper type thing. maybe add a NodeType method into SceneNode.
 
 			if (mesh_ptr->GetRenderPass() == KG::RenderPass::Null)
 				KE::Debug::print(KE::Debug::DBG_ERROR, "Renderer : RenderPass not set (default to 'null').");
 			if (mesh_ptr->GetRenderPass() == KG::RenderPass::NotRendered)
 				return;
-		
+
 			// mvp matrix
 			KG::Scene & scene_ref(KG::Graphics::Get().GetScene());
 			const glm::dmat4 camera_view_matrix(scene_ref.GetCamera().GetViewProjectionMatrixd());
@@ -227,7 +228,7 @@ namespace KG
 			}
 			else
 			{
-				//KE::Debug::print(KE::Debug::DBG_ERROR, "Renderer : VAO id is 0.");			
+				//KE::Debug::print(KE::Debug::DBG_ERROR, "Renderer : VAO id is 0.");
 			}
 			KE::Debug::check_for_GL_error();
 

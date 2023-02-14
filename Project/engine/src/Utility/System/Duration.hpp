@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
+#ifndef KE_UNREFERENCED_PARAMETER
 #define KE_UNREFERENCED_PARAMETER(X) X
+#endif
 
 namespace KE
 {
@@ -30,7 +32,7 @@ namespace KE
 		static KE::Duration Seconds(const double p_Amount);
 		static KE::Duration Milliseconds(const std::int32_t p_Amount);
 		static KE::Duration Microseconds(const std::int64_t p_Amount);
-		
+
 	private:
 		explicit Duration(const std::int64_t p_Microseconds);
 

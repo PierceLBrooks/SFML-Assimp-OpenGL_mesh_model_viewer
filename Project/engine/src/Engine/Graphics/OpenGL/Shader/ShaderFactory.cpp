@@ -53,7 +53,7 @@ namespace KG
 		{
 			glDetachShader(new_shader_program_id, shader_id); //KE::Debug::print(std::to_string(new_shader_program_id) + " " + std::to_string(shader_id));
 			glDeleteShader(shader_id);
-		}		
+		}
 
 		return new_shader_program_id;
 	}
@@ -152,7 +152,7 @@ namespace KG
 				KE::Debug::print(KE::Debug::DBG_ERROR, "ShaderProgramFactory : logic error on input operation.");
 			if ((fin.rdstate() & std::ifstream::badbit) != 0)
 				KE::Debug::print(KE::Debug::DBG_ERROR, "ShaderProgramFactory : read error on input operation.");
-			throw std::exception("failure to open shader source file.");
+			throw std::runtime_error("failure to open shader source file.");
 		}
 
 		std::string shader_source;

@@ -17,8 +17,10 @@
 #endif
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/projection.hpp>
 #ifdef _MSC_VER
-#pragma warning(pop) 
+#pragma warning(pop)
 #endif
 
 // assimp library
@@ -63,7 +65,7 @@ namespace KE
 	typedef sf::Window RenderDevice;
 	typedef sf::Window InputDevice;
 	//typedef sf::RenderWindow RenderDevice;
-	
+
 namespace Keyboard
 {
 	typedef sf::Keyboard::Key		Key;

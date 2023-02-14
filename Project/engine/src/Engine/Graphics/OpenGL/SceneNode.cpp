@@ -162,7 +162,7 @@ namespace KG
 		return m_ChildSceneNodeList;
 	}
 
-	const glm::dmat4 & SceneNode::GetCurrentToWorldTransform(void)
+	const glm::dmat4 & SceneNode::GetCurrentToWorldTransform(void) const
 	{
 		return m_CurrentToWorldMatix;
 	}
@@ -201,7 +201,7 @@ namespace KG
 	void SceneNode::SetShaderProgram(KG::ShaderProgram_SmartPtr p_spShaderProgram)
 	{
 		m_spShaderProgram = p_spShaderProgram;
-	}	
+	}
 
 	RootSceneNode::RootSceneNode(const KE::EntityID & p_EntityID, const RenderPass & p_RenderPass)
 		: SceneNode(p_EntityID, p_RenderPass)
@@ -223,7 +223,7 @@ namespace KG
 	bool RootSceneNode::AddChild(KG::SceneNode_SmartPtr p_spSceneNode)
 	{
 		unsigned renderpass = static_cast<unsigned>(p_spSceneNode->GetRenderPass());
-		auto & child_scenenode_list = this->GetChildSceneNodeList(); 
+		auto & child_scenenode_list = this->GetChildSceneNodeList();
 		if (renderpass >= child_scenenode_list.size() || !child_scenenode_list[renderpass])
 		{
 			KE::Debug::print(KE::Debug::DBG_ERROR, "RootSceneNode : RenderPass out of bounds.");

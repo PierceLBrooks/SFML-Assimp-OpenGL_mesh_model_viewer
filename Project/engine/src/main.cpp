@@ -87,7 +87,7 @@ static void AddGround(KE::Engine & p_rEngine)
 	/*std::shared_ptr<CITS::Ground::Mesh> ground(new CITS::Ground::Mesh());
 	p_rEngine.GetRenderSystem().GetScene().AddSceneNode(ground);*/
 
-	const char * path = "models-textures/model0.x";
+	const char * path = "models-textures/GUSv1-0.x";
 	KG::MeshLoader loader;
 	auto mesh_list = loader.Load(path)->GetList();
 	if (mesh_list.size() == 0)

@@ -8,7 +8,9 @@
 
 // macros
 #define DBG_PRINT_IGNORE(X) X
+#ifndef KE_UNREFERENCED_PARAMETER
 #define KE_UNREFERENCED_PARAMETER( PARAMETER ) PARAMETER
+#endif
 
 namespace KE
 {
@@ -29,7 +31,7 @@ namespace KE
 		Debugger(void){}
 		/*! dtor*/
 		~Debugger(void){}
-		
+
 		/*! call print() with a "Default" debug output header.*/
 		static void print(const std::string & p_msg);
 		/*! call print() with a specified debug output header.*/
@@ -64,7 +66,7 @@ namespace Debug
 
 	extern void check_for_GL_error(void);
 }
-	
+
 } //KE ns
 
 #endif

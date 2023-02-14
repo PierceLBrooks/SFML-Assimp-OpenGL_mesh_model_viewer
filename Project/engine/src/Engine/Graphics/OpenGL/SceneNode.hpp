@@ -81,7 +81,7 @@ namespace KG
 		const std::string & GetName(void) const;
 		const RenderPass GetRenderPass(void) const;
 		KG::SceneNodeSPList & GetChildSceneNodeList(void);
-		const glm::dmat4 & GetCurrentToWorldTransform(void);
+		const glm::dmat4 & GetCurrentToWorldTransform(void) const;
 
 		void SetEntityID(const KE::EntityID p_ID);
 		void SetName(const std::string & p_rName);

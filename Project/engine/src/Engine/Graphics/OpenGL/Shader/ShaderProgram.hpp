@@ -92,7 +92,15 @@ namespace KG
 		//template<> const bool SetParameter<GLint> (const GLchar * const p_UniformVariable, const GLint & p_Value, const GLint & p_Value2, const GLint & p_Value3, const GLint & p_Value4);
 
 		/*! variable amount of. */
-		inline const bool SetParameter(const GLchar * const p_UniformVariable, const std::vector<glm::mat4> & p_rValue1);
+		inline const bool SetParameter(const GLchar * const p_UniformVariable, const std::vector<glm::mat4> & p_rValue1)
+        {
+            GLint location;
+            if (!this->SearchAndGetUniform(location, p_UniformVariable))
+                return false;
+            glUniformMatrix4fv(location, p_rValue1.size(), GL_FALSE, glm::value_ptr(p_rValue1[0]));
+            KE::Debug::check_for_GL_error();
+            return true;
+        }
 
 
 	}; // ShaderProgram
@@ -102,4 +110,3 @@ namespace KG
 
 } // KG ns
 
-#include "ShaderProgram.inl"

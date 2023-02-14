@@ -186,8 +186,8 @@ namespace KG
 	}
 
 	void Transform::StrafeRight(const double p_Delta)
-	{		
-		this->StrafeRelativeTo(p_Delta, 0.0, 0.0, this->GetOrientationMat());			
+	{
+		this->StrafeRelativeTo(p_Delta, 0.0, 0.0, this->GetOrientationMat());
 	}
 
 	void Transform::StrafeForward(const double p_Delta)
@@ -210,7 +210,7 @@ namespace KG
 		const glm::dquat & q(m_OrientationQuat);
 		return glm::normalize( glm::dvec3
 		(
-			-2.0 * (q.x * q.z + q.w * q.y), 
+			-2.0 * (q.x * q.z + q.w * q.y),
 			-2.0 * (q.y * q.z - q.w * q.x),
 			-1.0 + 2.0 * (q.x * q.x + q.y * q.y))
 		);
@@ -221,7 +221,7 @@ namespace KG
 		const glm::dquat & q(m_OrientationQuat);
 		return glm::normalize( glm::dvec3
 		(
-			2.0 * (q.x * q.y - q.w * q.z), 
+			2.0 * (q.x * q.y - q.w * q.z),
 			1.0 - 2.0 * (q.x * q.x + q.z * q.z),
 			2.0 * (q.y * q.z + q.w * q.x))
 		);
@@ -240,7 +240,7 @@ namespace KG
 
 	const glm::dmat4 Transform::GetPositionMat(void) const
 	{
-		return glm::translate(m_Position);
+		return glm::translate(glm::dmat4(1.0), m_Position);
 	}
 
 	//void TransformMatrix::RotateRelativeTo(const double p_AngleX, const double p_AngleY, const double p_AngleZ, const glm::dvec3 p_Axis)
@@ -288,7 +288,7 @@ namespace KG
 	{
 		if (!m_Evaluated)
 		{
-			m_FinalTransformMatrix = glm::translate(m_Position) * this->GetOrientationMat() * glm::scale(m_Scale);
+			m_FinalTransformMatrix = glm::translate(glm::dmat4(1.0), m_Position) * this->GetOrientationMat() * glm::scale(glm::dmat4(1.0), m_Scale);
 			m_Evaluated = true;
 		}
 		return *this;
@@ -298,7 +298,7 @@ namespace KG
 	{
 		return p_rTM.GetGLMMatd() * p_GLMMat4;
 	}
-	
+
 	Transform operator*(const glm::dmat4 p_GLMMat4, Transform & p_rTM)
 	{
 		return p_GLMMat4 * p_rTM.GetGLMMatd();

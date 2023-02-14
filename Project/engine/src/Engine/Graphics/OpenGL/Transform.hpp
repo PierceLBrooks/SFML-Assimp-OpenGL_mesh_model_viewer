@@ -22,8 +22,8 @@ namespace KG
 		called StrafeRelativeTo which is used by the Strafe* methods internally. It works by Strafing relative
 		to a given orientation matrix or Transform object.
 
-		refer to 
-		http://glm.g-truc.net/0.9.4/api/a00151.html#gaacb9cbe8f93a8fef9dc3e25559df19c0 
+		refer to
+		http://glm.g-truc.net/0.9.4/api/a00151.html#gaacb9cbe8f93a8fef9dc3e25559df19c0
 		and http://glm.g-truc.net/0.9.4/api/a00206.html#gad9b1d9ea9a64ba5e76dbe807abf8362c
 		for glm functions used.
 
@@ -46,7 +46,7 @@ namespace KG
 		Transform(void);
 		Transform(const glm::mat4 p_Mat4f);
 		Transform(const glm::dmat4 p_Mat4d);
-	
+
 		Transform & SetScale(const double p_ScaleX, const double p_ScaleY, const double p_ScaleZ);
 		Transform & SetPosition(const double p_PosX, const double p_PosY, const double p_PosZ);
 		/*! Set orientation angles(degrees) in order X, Z, Y axis. */
@@ -116,7 +116,7 @@ namespace KG
 	protected:
 		/*! Evaluate the final transformation matrix if it's not done already. */
 		Transform & Evaluate(void);
-		
+
 	}; // Transform class
 
 	Transform operator*(Transform & p_rTM, const glm::dmat4 p_GLMMat4);

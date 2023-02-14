@@ -234,14 +234,14 @@ namespace KG
 			{
 				if ((p_rHeadIndex+1) < static_cast<int>(m_RotationKeys.size())) // head index is last keyframe
 				{
-					
+
 					p_rTailIndex = p_rHeadIndex + 1;
 				}
 				else
 				{
 					p_rHeadIndex = 0;
 					p_rTailIndex = 1;
-				}					
+				}
 				return true;
 			}
 		}
@@ -267,10 +267,10 @@ namespace KG
 		{
 			// scale
 			const KE::Duration scale_time_stamp(anim_node_sp->ComputeScaleTimeStamp(m_Duration));
-			const glm::dmat4 s_mat(glm::scale(anim_node_sp->InterpolateScale(scale_time_stamp)));
+			const glm::dmat4 s_mat(glm::scale(glm::dmat4(1.0), anim_node_sp->InterpolateScale(scale_time_stamp)));
 			// translation
 			const KE::Duration translate_time_stamp(anim_node_sp->ComputeTranslationTimeStamp(m_Duration));
-			const glm::dmat4 t_mat(glm::translate(anim_node_sp->InterpolateTranslation(translate_time_stamp)));
+			const glm::dmat4 t_mat(glm::translate(glm::dmat4(1.0), anim_node_sp->InterpolateTranslation(translate_time_stamp)));
 			//rotation
 			const KE::Duration rotate_time_stamp(anim_node_sp->ComputeRotationTimeStamp(m_Duration));
 			const glm::dmat4 r_mat(glm::mat4_cast(anim_node_sp->InterpolateRotation(rotate_time_stamp)));
