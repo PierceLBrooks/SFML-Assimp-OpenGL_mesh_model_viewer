@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildster directory="../build" distribution="../Distribution">
+  <project directory="../Project">
+    <dependencies>
+      <dependency>
+        <label>sfml</label>
+        <subpath>build</subpath>
+        <remote>
+          <url>https://github.com/SFML/SFML.git</url>
+          <git_repo>
+            <branch>2.1</branch>
+            <credentials>
+              <username>username</username>
+              <password>password</password>
+            </credentials>
+          </git_repo>
+        </remote>
+        <build>
+          <arguments></arguments>
+          <cmake>
+            <generator>
+              <switch id="BUILDSTER_OS">
+                <case check="Windows">MinGW Makefiles</case>
+                <case check="Linux">Unix Makefiles</case>
+                <case check="Darwin">Xcode</case>
+                <default><quit></quit></default>
+              </switch>
+            </generator>
+            <source>..</source>
+          </cmake>
+        </build>
+        <exports>
+          <export type="all">
+            <key>SFML_ROOT</key>
+            <value><install></install></value>
+          </export>
+          <export type="headers">
+            <key>SFML_INCLUDE_DIR</key>
+            <value><install></install>/include</value>
+          </export>
+          <export type="libraries">
+            <key>SFML_LIBRARIES</key>
+            <value><install</install>/lib</value>
+          </export>
+        </exports>
+        <imports></imports>
+      </dependency>
+      <dependency>
+        <label>sfgui</label>
+        <subpath>build</subpath>
+        <remote>
+          <url>https://github.com/TankOs/SFGUI.git</url>
+          <git_repo>
+            <branch>0.1.1</branch>
+            <credentials>
+              <username>username</username>
+              <password>password</password>
+            </credentials>
+          </git_repo>
+        </remote>
+        <build>
+          <arguments></arguments>
+          <cmake>
+            <generator>
+              <switch id="BUILDSTER_OS">
+                <case check="Windows">MinGW Makefiles</case>
+                <case check="Linux">Unix Makefiles</case>
+                <case check="Darwin">Xcode</case>
+                <default><quit></quit></default>
+              </switch>
+            </generator>
+            <source>..</source>
+          </cmake>
+        </build>
+        <exports>
+          <export type="all">
+            <key>SFGUI_ROOT</key>
+            <value><install></install></value>
+          </export>
+          <export type="headers">
+            <key>SFGUI_INCLUDE_DIR</key>
+            <value><install></install>/include</value>
+          </export>
+          <export type="libraries">
+            <key>SFGUI_LIBRARIES</key>
+            <value><install></install>/lib</value>
+          </export>
+        </exports>
+        <imports>
+          <import>sfml</import>
+        </imports>
+      </dependency>
+      <dependency>
+        <label>assimp</label>
+        <subpath>build</subpath>
+        <remote>
+          <url>https://github.com/assimp/assimp.git</url>
+          <git_repo>
+            <branch>v3.1.1</branch>
+            <credentials>
+              <username>username</username>
+              <password>password</password>
+            </credentials>
+          </git_repo>
+        </remote>
+        <build>
+          <arguments></arguments>
+          <cmake>
+            <generator>
+              <switch id="BUILDSTER_OS">
+                <case check="Windows">MinGW Makefiles</case>
+                <case check="Linux">Unix Makefiles</case>
+                <case check="Darwin">Xcode</case>
+                <default><quit></quit></default>
+              </switch>
+            </generator>
+            <source>..</source>
+          </cmake>
+        </build>
+        <exports>
+          <export type="all">
+            <key>ASSIMP_ROOT</key>
+            <value><install></install></value>
+          </export>
+          <export type="headers">
+            <key>ASSIMP_INCLUDE_DIR</key>
+            <value><install></install>/include</value>
+          </export>
+          <export type="libraries">
+            <key>ASSIMP_LIBRARIES</key>
+            <value><install></install>/lib</value>
+          </export>
+        </exports>
+        <imports></imports>
+      </dependency>
+      <dependency>
+        <label>glm</label>
+        <subpath>build</subpath>
+        <remote>
+          <url>https://github.com/g-truc/glm.git</url>
+          <git_repo>
+            <branch>0.9.4.6</branch>
+            <credentials>
+              <username>username</username>
+              <password>password</password>
+            </credentials>
+          </git_repo>
+        </remote>
+        <build>
+          <arguments></arguments>
+          <cmake>
+            <generator>
+              <switch id="BUILDSTER_OS">
+                <case check="Windows">MinGW Makefiles</case>
+                <case check="Linux">Unix Makefiles</case>
+                <case check="Darwin">Xcode</case>
+                <default><quit></quit></default>
+              </switch>
+            </generator>
+            <source>..</source>
+          </cmake>
+        </build>
+        <exports>
+          <export type="all">
+            <key>GLM_ROOT</key>
+            <value><install></install></value>
+          </export>
+          <export type="headers">
+            <key>GLM_INCLUDE_DIR</key>
+            <value><install></install>/include</value>
+          </export>
+          <export type="libraries">
+            <key>GLM_LIBRARIES</key>
+            <value><install></install>/lib</value>
+          </export>
+        </exports>
+        <imports></imports>
+      </dependency>
+      <dependency>
+        <label>devil</label>
+        <subpath>DevIL/build</subpath>
+        <remote>
+          <url>https://github.com/DentonW/DevIL.git</url>
+          <git_repo>
+            <branch>v1.8.0</branch>
+            <credentials>
+              <username>username</username>
+              <password>password</password>
+            </credentials>
+          </git_repo>
+        </remote>
+        <build>
+          <arguments></arguments>
+          <cmake>
+            <generator>
+              <switch id="BUILDSTER_OS">
+                <case check="Windows">MinGW Makefiles</case>
+                <case check="Linux">Unix Makefiles</case>
+                <case check="Darwin">Xcode</case>
+                <default><quit></quit></default>
+              </switch>
+            </generator>
+            <source>..</source>
+          </cmake>
+        </build>
+        <exports>
+          <export type="all">
+            <key>DEVIL_ROOT</key>
+            <value><install></install></value>
+          </export>
+          <export type="headers">
+            <key>DEVIL_INCLUDE_DIR</key>
+            <value><install></install>/include</value>
+          </export>
+          <export type="libraries">
+            <key>DEVIL_LIBRARIES</key>
+            <value><install></install>/lib</value>
+          </export>
+        </exports>
+        <imports></imports>
+      </dependency>
+    </dependencies>
+    <targets>
+      <target type="executable">
+        <label>engine</label>
+        <generator>
+          <switch id="BUILDSTER_OS">
+            <case check="Windows">MinGW Makefiles</case>
+            <case check="Linux">Unix Makefiles</case>
+            <case check="Darwin">Xcode</case>
+            <default><quit></quit></default>
+          </switch>
+        </generator>
+        <definitions></definitions>
+        <links>
+          <link>*assimp*</link>
+          <link>*sfgui*</link>
+          <link>*sfml-graphics*</link>
+          <link>*sfml-window*</link>
+          <link>*sfml-audio*</link>
+          <link>*sfml-network*</link>
+          <link>*sfml-system*</link>
+        </links>
+        <imports>
+          <import>devil</import>
+          <import>glm</import>
+          <import>assimp</import>
+          <import>sfgui</import>
+          <import>sfml</import>
+        </imports>
+      </target>
+    </targets>
+  </project>
+</buildster>
