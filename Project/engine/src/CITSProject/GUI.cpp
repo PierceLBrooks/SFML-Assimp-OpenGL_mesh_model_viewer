@@ -12,11 +12,11 @@ namespace CITS
 		m_wndmain->SetTitle( L"Control Panel" );
 
 		// Layout.
-		sfg::Box::Ptr boxmodeselect( sfg::Box::Create( sfg::Box::HORIZONTAL ) );
+		sfg::Box::Ptr boxmodeselect( sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL ) );
 		boxmodeselect->SetSpacing( 5.f );
 
-		sfg::Box::Ptr radio_box1( sfg::Box::Create( sfg::Box::VERTICAL ) );
-		sfg::Box::Ptr radio_box2( sfg::Box::Create( sfg::Box::VERTICAL ) );
+		sfg::Box::Ptr radio_box1( sfg::Box::Create( sfg::Box::Orientation::VERTICAL ) );
+		sfg::Box::Ptr radio_box2( sfg::Box::Create( sfg::Box::Orientation::VERTICAL ) );
 
 		FFCam   = sfg::RadioButton::Create( "Free Flight Camera" );
 		TPCam   = sfg::RadioButton::Create( "Third Person Camera", FFCam -> GetGroup() );
@@ -27,11 +27,11 @@ namespace CITS
 		radio_box1 -> Pack( TPCam );
 		radio_box2 -> Pack( ObjMan );
 		radio_box2 -> Pack( MatEdit );
-	
-		FFCam   -> GetSignal( sfg::Widget::OnLeftClick ).Connect( &ControlPanelGUI::OnFFCamClicked, this );
-		TPCam	-> GetSignal( sfg::Widget::OnLeftClick ).Connect( &ControlPanelGUI::OnTPCamClicked, this );
-		ObjMan  -> GetSignal( sfg::Widget::OnLeftClick ).Connect( &ControlPanelGUI::OnObjManClicked, this );
-		MatEdit -> GetSignal( sfg::Widget::OnLeftClick ).Connect( &ControlPanelGUI::OnMatEditClicked, this );
+
+		FFCam   -> GetSignal( sfg::Widget::OnLeftClick ).Connect( [&](){ this->OnFFCamClicked(); } );
+		TPCam	-> GetSignal( sfg::Widget::OnLeftClick ).Connect( [&](){ this->OnTPCamClicked(); } );
+		ObjMan  -> GetSignal( sfg::Widget::OnLeftClick ).Connect( [&](){ this->OnObjManClicked(); } );
+		MatEdit -> GetSignal( sfg::Widget::OnLeftClick ).Connect( [&](){ this->OnMatEditClicked(); } );
 
 		boxmodeselect -> Pack( radio_box1, false );
 		boxmodeselect -> Pack( radio_box2, false );
@@ -39,10 +39,10 @@ namespace CITS
 		sfg::Frame::Ptr frame1( sfg::Frame::Create( L"Select Mode" ) );
 		frame1->Add( boxmodeselect );
 
-		sfg::Box::Ptr boxloadobj( sfg::Box::Create( sfg::Box::VERTICAL ) );
+		sfg::Box::Ptr boxloadobj( sfg::Box::Create( sfg::Box::Orientation::VERTICAL ) );
 		boxloadobj->SetSpacing( 5.f );
 		/////////////////////////////////////////////////////////////////////////////////////
-		sfg::Separator::Ptr separatorv( sfg::Separator::Create( sfg::Separator::VERTICAL ) );
+		sfg::Separator::Ptr separatorv( sfg::Separator::Create( sfg::Separator::Orientation::VERTICAL ) );
 
 		m_Combo_Model = sfg::ComboBox::Create();
 		std::string line;
@@ -72,20 +72,20 @@ namespace CITS
 
 		// load object button.
 		m_btnLoadObject = sfg::Button::Create( L"Load Object") ;
-		m_btnLoadObject -> GetSignal(sfg::Button::OnLeftClick).Connect( &ControlPanelGUI::OnLoadObjectClicked, this);
+		m_btnLoadObject -> GetSignal(sfg::Button::OnLeftClick).Connect( [&](){ this->OnLoadObjectClicked(); });
 		boxloadobj -> Pack( m_btnLoadObject, false );
 
 		// change texture button
 		m_btnChangeTexture = sfg::Button::Create( L"Change Texture") ;
-		m_btnChangeTexture -> GetSignal(sfg::Button::OnLeftClick).Connect( &ControlPanelGUI::OnChangeTextureClicked, this);
-		
+		m_btnChangeTexture -> GetSignal(sfg::Button::OnLeftClick).Connect( [&](){ this->OnChangeTextureClicked(); });
+
 
 		sfg::Frame::Ptr frame_Strafe = sfg::Frame::Create(L"Strafe Radius");
-		sfg::Box::Ptr box_Strafe = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr box_Strafe = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_StrafeRadius = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_StrafeRadius = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 		m_StrafeRadiusAdj = sfg::Adjustment::Create(  1.f, 0.f, 10.0f, .50f, 1.0f, 0.f);
-		m_StrafeRadiusAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateStrafeRadius, this );
+		m_StrafeRadiusAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateStrafeRadius(); } );
 
 		m_StrafeRadius -> SetAdjustment(m_StrafeRadiusAdj);
 		m_StrafeRadius -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
@@ -96,11 +96,11 @@ namespace CITS
 
 
 		sfg::Frame::Ptr frame_Speed = sfg::Frame::Create(L"Strafe Speed");
-		sfg::Box::Ptr box_Speed = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr box_Speed = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_StrafeSpeed = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_StrafeSpeed = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 		m_StrafeSpeedAdj = sfg::Adjustment::Create(  1.f, 0.0f, 20.0f, 0.05f, 0.1f, 0.f);
-		m_StrafeSpeedAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateStrafeSpeed, this );
+		m_StrafeSpeedAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateStrafeSpeed(); } );
 
 		m_StrafeSpeed -> SetAdjustment(m_StrafeSpeedAdj);
 		m_StrafeSpeed -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
@@ -118,13 +118,13 @@ namespace CITS
 		m_LoadObjectFrame -> SetAlignment( sf::Vector2f( .8f, .0f ) );
 
 		//////////////////////////////////////////////////////////////////////////////////////
-		sfg::Separator::Ptr separatorh( sfg::Separator::Create( sfg::Separator::HORIZONTAL ) );
+		sfg::Separator::Ptr separatorh( sfg::Separator::Create( sfg::Separator::Orientation::HORIZONTAL ) );
 
-		sfg::Box::Ptr box_TextureEdit( sfg::Box::Create( sfg::Box::VERTICAL ) );
-		sfg::Box::Ptr box_TextureEdit1( sfg::Box::Create( sfg::Box::HORIZONTAL ) );
-		sfg::Box::Ptr box_TextureEdit2( sfg::Box::Create( sfg::Box::HORIZONTAL ) );
-	    
-		sfg::Box::Ptr boxmain( sfg::Box::Create( sfg::Box::VERTICAL ) );
+		sfg::Box::Ptr box_TextureEdit( sfg::Box::Create( sfg::Box::Orientation::VERTICAL ) );
+		sfg::Box::Ptr box_TextureEdit1( sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL ) );
+		sfg::Box::Ptr box_TextureEdit2( sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL ) );
+
+		sfg::Box::Ptr boxmain( sfg::Box::Create( sfg::Box::Orientation::VERTICAL ) );
 		boxmain->SetSpacing( 5.f );
 
 		m_EditMaterialsFrame = sfg::Frame::Create( L"Edit Materials" );
@@ -132,27 +132,27 @@ namespace CITS
 		m_EditMaterialsFrame -> SetAlignment( sf::Vector2f( .8f, .0f ) );
 
 		sfg::Frame::Ptr DiffuseFrame = sfg::Frame::Create(L"Diffuse");
-		sfg::Box::Ptr diffbox = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr diffbox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_DiffuseScale1 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_DiffuseScale2 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_DiffuseScale3 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_DiffuseScale1 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_DiffuseScale2 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_DiffuseScale3 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 
 		m_dAdjustment1 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_dAdjustment1 -> GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_dAdjustment1 -> GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_DiffuseScale1 -> SetAdjustment(m_dAdjustment1);
 		m_DiffuseScale1 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		m_dAdjustment2 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_dAdjustment2 -> GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );		
+		m_dAdjustment2 -> GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_DiffuseScale2 -> SetAdjustment(m_dAdjustment2);
 		m_DiffuseScale2 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		m_dAdjustment3 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_dAdjustment3 -> GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );	
+		m_dAdjustment3 -> GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_DiffuseScale3 -> SetAdjustment(m_dAdjustment3);
 		m_DiffuseScale3 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		diffbox -> Pack(m_DiffuseScale1,true);
 		diffbox -> Pack(m_DiffuseScale2,true);
 		diffbox -> Pack(m_DiffuseScale3,true);
@@ -160,26 +160,26 @@ namespace CITS
 		DiffuseFrame -> Add(diffbox);
 
 		sfg::Frame::Ptr SpecularFrame = sfg::Frame::Create(L"Specular");
-		sfg::Box::Ptr specbox1 = sfg::Box::Create(sfg::Box::VERTICAL);
-		m_SpecularScale1 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_SpecularScale2 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_SpecularScale3 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		sfg::Box::Ptr specbox1 = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
+		m_SpecularScale1 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_SpecularScale2 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_SpecularScale3 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 
 		m_spAdjustment1 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_spAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_spAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_SpecularScale1 -> SetAdjustment(m_spAdjustment1);
 		m_SpecularScale1 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
 
 		m_spAdjustment2 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_spAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_spAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_SpecularScale2 -> SetAdjustment(m_spAdjustment2);
 		m_SpecularScale2 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
 
 		m_spAdjustment3 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_spAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_spAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_SpecularScale3 -> SetAdjustment(m_spAdjustment3);
 		m_SpecularScale3 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		specbox1 -> Pack(m_SpecularScale1,true);
 		specbox1 -> Pack(m_SpecularScale2,true);
 		specbox1 -> Pack(m_SpecularScale3,true);
@@ -187,27 +187,27 @@ namespace CITS
 		SpecularFrame -> Add(specbox1);
 
 		sfg::Frame::Ptr AmbientFrame = sfg::Frame::Create(L"Ambient");
-		sfg::Box::Ptr ambbox = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr ambbox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_AmbientScale1 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_AmbientScale2 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_AmbientScale3 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_AmbientScale1 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_AmbientScale2 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_AmbientScale3 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 
 		m_ambAdjustment1 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_ambAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_ambAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_AmbientScale1 -> SetAdjustment(m_ambAdjustment1);
 		m_AmbientScale1 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		m_ambAdjustment2 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_ambAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_ambAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_AmbientScale2 -> SetAdjustment(m_ambAdjustment2);
 		m_AmbientScale2 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		m_ambAdjustment3 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_ambAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_ambAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 		m_AmbientScale3 -> SetAdjustment(m_ambAdjustment3);
 		m_AmbientScale3 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		ambbox -> Pack(m_AmbientScale1,true);
 		ambbox -> Pack(m_AmbientScale2,true);
 		ambbox -> Pack(m_AmbientScale3,true);
@@ -215,30 +215,30 @@ namespace CITS
 		AmbientFrame -> Add(ambbox);
 
 		sfg::Frame::Ptr EmissiveFrame = sfg::Frame::Create(L"Emissive");
-		sfg::Box::Ptr embox = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr embox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_EmissiveScale1 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_EmissiveScale2 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
-		m_EmissiveScale3 = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_EmissiveScale1 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_EmissiveScale2 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
+		m_EmissiveScale3 = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 
 		m_emAdjustment1 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_emAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_emAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 
 		m_EmissiveScale1 -> SetAdjustment(m_emAdjustment1);
 		m_EmissiveScale1 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
 
 		m_emAdjustment2 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_emAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_emAdjustment2->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 
 		m_EmissiveScale2 -> SetAdjustment(m_emAdjustment2);
 		m_EmissiveScale2 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
 
 		m_emAdjustment3 = sfg::Adjustment::Create( 0.0f, 0.0f, 1.0f, 0.01f, 0.1f, 0.f);
-		m_emAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_emAdjustment3->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 
 		m_EmissiveScale3 -> SetAdjustment(m_emAdjustment3);
 		m_EmissiveScale3 -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
-	
+
 		embox -> Pack(m_EmissiveScale1,true);
 		embox -> Pack(m_EmissiveScale2,true);
 		embox -> Pack(m_EmissiveScale3,true);
@@ -246,11 +246,11 @@ namespace CITS
 		EmissiveFrame -> Add(embox);
 
 		sfg::Frame::Ptr ShineFrame = sfg::Frame::Create(L"Shine");
-		sfg::Box::Ptr shbox = sfg::Box::Create(sfg::Box::VERTICAL);
+		sfg::Box::Ptr shbox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
 
-		m_ShineScale = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		m_ShineScale = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 		m_shAdjustment1 = sfg::Adjustment::Create( 1.f, 0.f, 200.0f, 1.0f, 5.0f, 0.f);
-		m_shAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::UpdateMaterials, this );
+		m_shAdjustment1->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->UpdateMaterials(); } );
 
 		m_ShineScale -> SetAdjustment(m_shAdjustment1);
 		m_ShineScale -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
@@ -260,11 +260,11 @@ namespace CITS
 		ShineFrame -> Add(shbox);
 
 		sfg::Frame::Ptr TScaleFrame = sfg::Frame::Create(L"Scale Texture");
-		sfg::Box::Ptr scalebox = sfg::Box::Create(sfg::Box::VERTICAL);
-		
-		m_TextureScale = sfg::Scale::Create(sfg::Scale::HORIZONTAL);
+		sfg::Box::Ptr scalebox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL);
+
+		m_TextureScale = sfg::Scale::Create(sfg::Scale::Orientation::HORIZONTAL);
 		m_TextureScaleAdj = sfg::Adjustment::Create( 1.0f, 0.01f, 1.0f, 0.05f, 0.1f, 0.0f);
-		m_TextureScaleAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( &ControlPanelGUI::TextureMultiplier, this );
+		m_TextureScaleAdj->GetSignal( sfg::Adjustment::OnChange ).Connect( [&](){ this->TextureMultiplier(); } );
 
 		m_TextureScale -> SetAdjustment(m_TextureScaleAdj);
 		m_TextureScale -> SetRequisition( sf::Vector2f( 80.f, 20.f ) );
@@ -281,7 +281,7 @@ namespace CITS
 		box_TextureEdit -> Pack(box_TextureEdit2);
 		box_TextureEdit -> Pack(ShineFrame);
 		box_TextureEdit -> Pack(TScaleFrame);
-	
+
 		m_EditMaterialsFrame -> Add(box_TextureEdit);
 
 		boxmain->Pack( frame1, false );
@@ -302,7 +302,7 @@ namespace CITS
 		boxmain->Pack( btnhidewindow, false );
 
 		// Signals.
-		btnhidewindow->GetSignal( sfg::Widget::OnLeftClick ).Connect( &ControlPanelGUI::OnHideWindowClicked, this );
+		btnhidewindow->GetSignal( sfg::Widget::OnLeftClick ).Connect( [&](){ this->OnHideWindowClicked(); } );
 
 		m_wndmain->Add(boxmain);
 		m_wndmain->SetRequisition(sf::Vector2f(475.f,200.f));
@@ -343,7 +343,7 @@ namespace CITS
 		KE::Event::Get().QueueEvent(KE::Event_SmartPtr(new CITS::SetObjectMatMode_Event));
 	}
 
-	void ControlPanelGUI::OnHideWindowClicked() 
+	void ControlPanelGUI::OnHideWindowClicked()
 	{
 		//(m_wndmain->IsLocallyVisible());
 		 m_wndmain->Show(false);

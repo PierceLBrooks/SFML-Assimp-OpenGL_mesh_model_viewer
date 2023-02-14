@@ -1,6 +1,8 @@
 #pragma once
 #include "../../common.hpp"
 #include "RenderPass.hpp"
+#include "Renderer.hpp"
+#include "Scene.hpp"
 #include "../../Entity/EntityID.hpp"
 #include "Transform.hpp"
 
@@ -20,7 +22,7 @@ namespace KG
 	typedef std::shared_ptr<KG::ShaderProgram> ShaderProgram_SmartPtr;
 
 	/*! \class SceneNode
-		
+
 		Basic building blocks of the render system's scene graph and/or any tree data structures in game or engine.
 		Not meant to be used directly.
 
@@ -35,13 +37,13 @@ namespace KG
 	class SceneNode
 		:public KG::Transform
 	{
-		friend class Scene;
-		friend class Renderer;
+		friend class KG::Scene;
+		friend class KG::Renderer;
 
 	protected:
 		KE::EntityID						m_ID;
 		std::string							m_Name;
-		KG::SceneNode::RenderPass			m_RenderPass;
+		KG::RenderPass			m_RenderPass;
 		KE::RenderComponent_WeakPtr			m_wpRenderComponent;
 		KG::SceneNode *						m_pParentSceneNode;
 		KG::SceneNodeSPList					m_ChildSceneNodeList;
@@ -90,7 +92,7 @@ namespace KG
 		void SetCurrentToWorldMatrix(const glm::dmat4 & p_rModelMat4);
 		void SetShaderProgram(KG::ShaderProgram_SmartPtr p_spShaderProgram);
 
-	}; // SceneNode class 
+	}; // SceneNode class
 
 	/*! \class RootSceneNode
 	*/
@@ -107,6 +109,6 @@ namespace KG
 
 	private:
 		RootSceneNode(const KG::RootSceneNode & p_rRootSceneNode);
-	}; // RootSceneNode class 
+	}; // RootSceneNode class
 
 } // KG ns

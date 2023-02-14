@@ -1,11 +1,11 @@
 #pragma once
-#include <SFML\System\Clock.hpp>
-#include "..\Interface\ITime.hpp"
+#include <SFML/System/Clock.hpp>
+#include "../Interface/ITime.hpp"
 
 namespace KE
 {
 	/** \class SFML_Time
-		
+
 		A time utility class implementing the ITime interface using the SFML library's time related class.
 	*/
 	class SFML2_Time : ITime
@@ -14,7 +14,7 @@ namespace KE
 		sf::Clock m_clock;
 		sf::Time m_FrozenDuration;
 		bool m_Frozen;
-	
+
 	public:
 		/*! Ctor */
 		SFML2_Time(void)
@@ -34,7 +34,7 @@ namespace KE
 			{
 				m_Frozen = true;
 				m_FrozenDuration = m_clock.getElapsedTime();
-			}			
+			}
 		}
 		/*! Un-freeze the internal timer/stopwatch/clock. */
 		virtual void Unfreeze(void) final
@@ -80,7 +80,7 @@ namespace KE
 		}
 
 	}; // SFML_Time class
-	
+
 	typedef KE::SFML2_Time Timer; //using Time = std_Time; NOT SUPPORTED BY VC110
 
 } // KE ns

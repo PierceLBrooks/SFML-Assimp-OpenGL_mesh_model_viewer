@@ -10,7 +10,7 @@
 class Task
 {
 private:
-	
+
 public:
 	Task(void);
 	~Task(void);
@@ -21,9 +21,9 @@ class ThreadPool
 {
 	friend class Task;
 private:
-	static enum state {uninitialized, running, shutdown};
+	enum state {uninitialized, running, shutdown};
 	static state s_State;
-	static enum task_queue_state {no_task, has_task};
+	enum task_queue_state {no_task, has_task};
 	static task_queue_state s_TaskQueueState;
 
 	int m_ThreadCount;

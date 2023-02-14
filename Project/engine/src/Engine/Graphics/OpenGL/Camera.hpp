@@ -1,6 +1,7 @@
 #pragma once
 #include "../../common.hpp"
-#include "../../Graphics/OpenGL/SceneNode.hpp"
+#include "../../Entity/RenderComponent.hpp"
+#include "SceneNode.hpp"
 
 namespace KE
 {
@@ -18,8 +19,8 @@ namespace KG
 		The Camera class has a Field of View mode.
 			- Fixedfovy mode: vertical field of view is fixed. Wider screen = More horizontal views.
 			- Fixedfovx mode: horizontal field of view is fixed, higher vertical resolution = bigger vertical field.
-			- FixedDynamic mode : works as Fixedfovy mode until aspect ratio goes below the limit, then switch to Fixedfovx mode. 
-	
+			- FixedDynamic mode : works as Fixedfovy mode until aspect ratio goes below the limit, then switch to Fixedfovx mode.
+
 		Orientation related methods have to be overloaded and have parameters negated because we don't move the camera,
 		but we move the world. The same does not have to be done for position related methods because this is done when
 		we calculate the project (we used -m_Position).

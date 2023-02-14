@@ -1,12 +1,14 @@
 #pragma once
 #include "../../common.hpp"
 #include "../../Entity/EntityID.hpp"
-#include "Camera.hpp"
 #include "Renderer.hpp"
 #include "MatrixStack.hpp"
 
 namespace KG
 {
+	class Camera;
+	typedef std::shared_ptr<KG::Camera> Camera_SmartPtr;
+	typedef std::weak_ptr<KG::Camera> Camera_WeakPtr;
 	class SceneNode;
 	typedef std::shared_ptr<KG::SceneNode> SceneNode_SmartPtr;
 	typedef std::map<KE::EntityID, KG::SceneNode_SmartPtr> SceneNodeMap;

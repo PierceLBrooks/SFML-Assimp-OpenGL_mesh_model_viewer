@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include "SceneNode.hpp"
+#include "Camera.hpp"
 
 namespace KG
 {
@@ -26,7 +27,7 @@ namespace KG
 		if (m_spRootNode != nullptr)
 			m_spRootNode->UpdateAll(*this, p_Elapsed);
 	}
-	
+
 	void Scene::RenderAll(void)
 	{
 		if (SceneReady())
@@ -46,9 +47,9 @@ namespace KG
 			KE::Debug::print(KE::Debug::DBG_ERROR, "Scene : adding invalid node with invalid id.");
 			return false;
 		}
-		
+
 		m_SceneNodeMap.insert(std::make_pair(p_spNewSceneNode->GetEntityID(), p_spNewSceneNode));
-		
+
 		if (m_spRootNode == nullptr)
 		{
 			KE::Debug::print(KE::Debug::DBG_ERROR, "Scene : m_RootNode is null.");

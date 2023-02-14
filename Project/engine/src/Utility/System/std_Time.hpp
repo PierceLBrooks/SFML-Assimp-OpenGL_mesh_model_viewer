@@ -1,12 +1,12 @@
 #pragma once
-#include "..\Interface\ITime.hpp"
+#include "../Interface/ITime.hpp"
 #include <chrono>
 #include <stdexcept>
 
 namespace KE
 {
 	/** \class std_Time
-		
+
 		A time utility class implementing the ITime interface using the std's chrono library.
 	*/
 	class std_Time : public KE::ITime
@@ -32,7 +32,7 @@ namespace KE
 			{
 				m_Frozen = true;
 				m_TimeFreezePoint = std::chrono::high_resolution_clock::now();
-			}			
+			}
 		}
 		/*! Un-freeze the internal timer/stopwatch/clock. */
 		virtual void Unfreeze(void) final
@@ -91,7 +91,7 @@ namespace KE
 		}
 
 	}; // std_Time class
-		
+
 	typedef KE::std_Time Time; //using Time = std_Time; NOT SUPPORTED BY VC110
 
 } // KE ns

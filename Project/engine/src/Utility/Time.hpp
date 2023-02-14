@@ -9,9 +9,9 @@
 // _KE_USE__std_Time_
 
 #if defined(_KE_USE__std_Time_)
-	#include "System\std_Time.hpp"
+	#include "System/std_Time.hpp"
 #elif defined(_KE_USE__SFML2_Time)
-	#include "System\SFML2_Time.hpp"
+	#include "System/SFML2_Time.hpp"
 #endif
 
 
