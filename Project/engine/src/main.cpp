@@ -75,7 +75,7 @@ static void AddAvatar(KE::Engine & p_rEngine)
 
 	KG::Camera_SmartPtr camera(new KG::Camera());
 	render->SetSceneNode(camera);
-	
+
 	p_rEngine.GetEntityManager().Add(entity);
 	p_rEngine.GetRenderSystem().GetScene().SetCamera(camera);
 
@@ -95,7 +95,7 @@ static void AddGround(KE::Engine & p_rEngine)
 		KE::Debug::print("nothing in mesh list.");
 		return;
 	}
-	
+
 	KG::Mesh_SmartPtr mesh(mesh_list.at(0));
 	assert(mesh);
 	if(mesh->Loaded())
@@ -120,7 +120,7 @@ static void TestAsset(KE::Engine & p_rEngine)
 {
 	std::string model_tex_dir("models-textures/");
 	std::string mesh_file("");
-	std::ifstream fin("CurrentMesh.txt");
+	std::ifstream fin(model_tex_dir+"CurrentMesh.txt");
 	if (fin) fin >> mesh_file;
 	KG::MeshLoader loader;
 	KG::Meshes_SmartPtr meshes(loader.Load(model_tex_dir+mesh_file));
@@ -134,7 +134,7 @@ static void TestAsset(KE::Engine & p_rEngine)
 		KE::Debug::print("nothing in mesh list.");
 		return;
 	}
-	
+
 	meshes->BufferAll();
 	KE::Debug::check_for_GL_error();
 
@@ -152,9 +152,8 @@ static void TestAsset(KE::Engine & p_rEngine)
 
 	// texture
 	std::string texture_path("");
-	std::ifstream texture_fin("CurrentTexture.txt");
-	if (texture_fin)
-		texture_fin >> texture_path;
+	std::ifstream texture_fin(model_tex_dir+"CurrentTexture.txt");
+	if (texture_fin) texture_fin >> texture_path;
 	KG::Texture_SmartPtr texture(new KG::Texture(KG::Texture::DType::Tex2D, model_tex_dir+texture_path));
 	//mesh->SetTexture(texture);
 	meshes->SetMaterial(KG::Material());
@@ -167,7 +166,7 @@ static void TestAsset(KE::Engine & p_rEngine)
 	p_rEngine.GetEntityManager().Add(entity);
 
 	KE::Event::Get().QueueEvent(KE::Event_SmartPtr(new CITS::NewObject_Event(entity->GetID())));
-	
+
 	KE::Debug::print("Added model.");
 }
 
@@ -179,9 +178,9 @@ int main()
 	{
 		KE::Engine kengine;
 		kengine.Init();
-		
+
 		TestAsset(kengine);
-		
+
 		AddGround(kengine);
 		AddController(kengine);
 		AddAvatar(kengine);
