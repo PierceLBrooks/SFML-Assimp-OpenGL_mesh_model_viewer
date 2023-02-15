@@ -18,6 +18,9 @@
         <build>
           <arguments>
             <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DCMAKE_DEBUG_POSTFIX=d</argument>
+            <argument>-DONLY_LIBS=ON</argument>
+            <argument>-Dglew-cmake_BUILD_SHARED=OFF</argument>
           </arguments>
           <cmake>
             <generator>
@@ -33,11 +36,11 @@
         </build>
         <exports>
           <export type="all">
-            <key>GLEW_ROOT</key>
+            <key>GLEW_ROOT_DIR</key>
             <value><install></install></value>
           </export>
           <export type="headers">
-            <key>GLEW_INCLUDE_DIR</key>
+            <key>GLEW_INCLUDE_DIRS</key>
             <value><install></install>/include</value>
           </export>
           <export type="libraries">
@@ -65,6 +68,8 @@
         <build>
           <arguments>
             <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DCMAKE_DEBUG_POSTFIX=d</argument>
+            <argument>-DCMAKE_MODULE_PATH=<distribution></distribution>/../../cmake</argument>
           </arguments>
           <cmake>
             <generator>
@@ -79,10 +84,10 @@
           </cmake>
         </build>
         <exports>
-          <export type="other">
+          <!--<export type="other">
             <key>SFML_CMAKE</key>
-            <value><install></install>/share/SFML/cmake/Modules</value>
-          </export>
+            <value><origin></origin>/cmake/Modules</value>
+          </export>-->
           <export type="all">
             <key>SFML_ROOT</key>
             <value><install></install></value>
@@ -116,8 +121,10 @@
         <build>
           <arguments>
             <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
-            <argument>-DCMAKE_MODULE_PATH=<data id="SFML_CMAKE"></data></argument>
+            <argument>-DCMAKE_DEBUG_POSTFIX=d</argument>
+            <argument>-DCMAKE_MODULE_PATH=<distribution></distribution>/../../cmake</argument>
             <argument>-DSFGUI_BUILD_EXAMPLES=false</argument>
+            <argument>-DNV_SYSTEM_PROCESSOR=CMAKE_SYSTEM_PROCESSOR</argument>
           </arguments>
           <cmake>
             <generator>
@@ -132,6 +139,10 @@
           </cmake>
         </build>
         <exports>
+          <!--<export type="other">
+            <key>SFGUI_CMAKE</key>
+            <value><origin></origin>/cmake</value>
+          </export>-->
           <export type="all">
             <key>SFGUI_ROOT</key>
             <value><install></install></value>
@@ -166,6 +177,8 @@
         <build>
           <arguments>
             <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DASSIMP_BUILD_ASSIMP_TOOLS=OFF</argument>
+            <argument>-DASSIMP_BUILD_TESTS=OFF</argument>
           </arguments>
           <cmake>
             <generator>
@@ -245,9 +258,9 @@
         <label>devil</label>
         <subpath>DevIL/build</subpath>
         <remote>
-          <url>https://github.com/DentonW/DevIL.git</url>
+          <url>https://github.com/dooglz/DevIL.git</url>
           <git_repo>
-            <branch>v1.8.0</branch>
+            <branch>master</branch>
             <credentials>
               <username>username</username>
               <password>password</password>
@@ -257,6 +270,9 @@
         <build>
           <arguments>
             <argument>-DCMAKE_POLICY_DEFAULT_CMP0074=NEW</argument>
+            <argument>-DIL_BUILD_ILU=OFF</argument>
+            <argument>-DIL_BUILD_ILUT=OFF</argument>
+            <argument>-DIL_TESTS=OFF</argument>
           </arguments>
           <cmake>
             <generator>
@@ -298,7 +314,16 @@
             <default><quit></quit></default>
           </switch>
         </generator>
-        <definitions></definitions>
+        <definitions>
+          <definition>
+            <key>GLEW_STATIC</key>
+            <value>1</value>
+          </definition>
+          <definition>
+            <key>KE_DEBUG</key>
+            <value>1</value>
+          </definition>
+        </definitions>
          <packages>
            <package>
             <label>OpenGL</label>

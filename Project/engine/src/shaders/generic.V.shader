@@ -11,7 +11,7 @@ layout(location=5) in vec4 	vBoneWeights;
 
 // animation related
 uniform	bool HasBones = false;
-const int MaxNumBones = 128;
+const int MaxNumBones = 64;
 uniform mat4 BoneTranforms[MaxNumBones];
 
 // model related.

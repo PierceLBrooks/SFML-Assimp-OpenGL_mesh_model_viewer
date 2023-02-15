@@ -6,6 +6,8 @@
 #include "../Engine/Graphics/OpenGL_Graphics.hpp"
 #include "GUI.hpp"
 
+#define DEFAULT_MODEL "GUSv1-0.x"
+
 namespace CITS
 {
 namespace ObjectManipulator
@@ -21,13 +23,13 @@ namespace ObjectManipulator
 			this->GetEntity()->GetID()
 			, std::bind(&LogicComponent::EventDelegate, this, std::placeholders::_1)
 			, CITS::EventType::NewObject
-		); 
+		);
 		KE::Event::Get().AddListener
 		(
 			this->GetEntity()->GetID()
 			, std::bind(&LogicComponent::EventDelegate, this, std::placeholders::_1)
 			, CITS::EventType::TranslateDeltaY
-		); 
+		);
 		KE::Event::Get().AddListener
 		(
 			this->GetEntity()->GetID()
@@ -195,7 +197,7 @@ namespace ObjectManipulator
 				const glm::dquat offset = glm::angleAxis(delta, glm::dvec3(1.0, 0.0, 0.0));
 				glm::dquat Delta =  camera_quat * offset * glm::conjugate(camera_quat);
 				Delta = Delta * node->GetOrientationQuat();
-				node->SetOrientationQuat(glm::normalize(Delta)); 
+				node->SetOrientationQuat(glm::normalize(Delta));
 				break;
 			}
 		case CITS::EventType::RollRight:
@@ -210,7 +212,7 @@ namespace ObjectManipulator
 				const glm::dquat offset = glm::angleAxis(delta, glm::dvec3(0.0, 1.0, 0.0));
 				glm::dquat Delta =  camera_quat * offset * glm::conjugate(camera_quat);
 				Delta = Delta * node->GetOrientationQuat();
-				node->SetOrientationQuat(glm::normalize(Delta)); 
+				node->SetOrientationQuat(glm::normalize(Delta));
 				break;
 			}
 		case CITS::EventType::NewGUICreated:
@@ -324,7 +326,7 @@ namespace ObjectManipulator
 		case CITS::EventType::ChangeTextureRequest:
 			this->HandleManipulation(p_spEvent);
 			break;
-		case CITS::EventType::NewObjectRequest:	
+		case CITS::EventType::NewObjectRequest:
 			this->HandleNewObjectRequest(p_spEvent);
 			break;
 		case CITS::EventType::SetMatAmbient:
@@ -346,14 +348,14 @@ namespace ObjectManipulator
 		}
 		return true;
 	}
-	
+
 	const bool LogicComponent::SpawnNewObject(const std::shared_ptr<CITS::NewObjectRequest_Event> p_spEvent)
 	{
 		/* figure out mesh and texture name. */
 		if (m_MeshName == "" && p_spEvent->GetMeshFileName() == "DEFAULT")
 		{
-			KE::Debug::print("ObjectManipulator : Loading default model = \"model55.x\"");
-			m_MeshName = "model55.x";
+			KE::Debug::print(std::string("ObjectManipulator : Loading default model = \"")+std::string(DEFAULT_MODEL)+std::string("\""));
+			m_MeshName += DEFAULT_MODEL;
 			if (p_spEvent->GetTextureFileName() == "NONE")
 				m_TextureName = "NONE";
 		}
@@ -366,7 +368,7 @@ namespace ObjectManipulator
 			m_MeshName = p_spEvent->GetMeshFileName();
 			m_TextureName = p_spEvent->GetTextureFileName();
 		}
-		
+
 		/* use texture? */
 		bool use_texture;
 		use_texture = (m_TextureName == "NONE") ? false : true; // don't use texture if string empty.

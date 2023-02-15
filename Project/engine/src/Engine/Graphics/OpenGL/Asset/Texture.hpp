@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../common.hpp"
 #include <IL/il.h>
-#include <IL/ilu.h>		// might not need this at all.
+//#include <IL/ilu.h>		// might not need this at all.
 //#include <IL/ilut.h>	// might not need this at all.
 
 namespace KG

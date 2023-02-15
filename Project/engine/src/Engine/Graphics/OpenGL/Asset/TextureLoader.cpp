@@ -7,7 +7,7 @@ namespace KG
 	TextureLoader::TextureLoader(void)
 	{
 		ilInit();
-		iluInit();
+		//iluInit();
 		//ilutInit();
 	}
 
@@ -85,6 +85,7 @@ namespace KG
 			std::string error_str = "DevIL has encountered an error : ";
 			switch (error_code)
 			{
+				/*
 				case IL_INVALID_ENUM:
 					error_str += "IL_INVALID_ENUM = " + std::string(iluErrorString(IL_INVALID_ENUM));	break;
 				case IL_OUT_OF_MEMORY:
@@ -135,6 +136,9 @@ namespace KG
 					error_str += "IL_LIB_EXR_ERROR = " + std::string(iluErrorString(IL_LIB_EXR_ERROR)); break;
 				case IL_UNKNOWN_ERROR:
 					error_str += "IL_UNKNOWN_ERROR = " + std::string(iluErrorString(IL_UNKNOWN_ERROR)); break;
+				*/
+				default:
+					error_str += std::to_string(static_cast<int>(error_code)); break;
 			}
 			KE::Debug::print(KE::Debug::DBG_ERROR, error_str);
 		}
