@@ -323,8 +323,27 @@
             <key>KE_DEBUG</key>
             <value>1</value>
           </definition>
+          <definition>
+            <key>KE_OS_<upper><data id="BUILDSTER_OS"></data></upper></key>
+            <value>1</value>
+          </definition>
         </definitions>
          <packages>
+           <if_check id="BUILDSTER_OS" check="Linux">
+             <package>
+               <label>X11</label>
+               <exports>
+                 <export type="headers">
+                   <key>X11_INCLUDE_DIRS</key>
+                   <value></value>
+                 </export>
+                 <export type="libraries">
+                   <key>X11_LIBRARIES</key>
+                   <value></value>
+                 </export>
+               </exports>
+             </package>
+           </if_check>
            <package>
             <label>OpenGL</label>
             <exports>

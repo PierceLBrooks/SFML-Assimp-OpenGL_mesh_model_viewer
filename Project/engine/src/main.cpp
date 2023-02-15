@@ -10,6 +10,10 @@
 #include "CITSProject/GUI.hpp"
 #include "CITSProject/CITSEvents.hpp"
 
+#ifdef KE_OS_LINUX
+#include <X11/Xlib.h>
+#endif
+
 static void AddControlPanelGUI(KE::Engine & p_rEngine)
 {
 	std::shared_ptr<KE::Entity> entity(new KE::Entity());
@@ -173,6 +177,11 @@ static void TestAsset(KE::Engine & p_rEngine)
 
 int main()
 {
+#ifdef KE_OS_LINUX
+	KE::Debugger::print("X11");
+	XInitThreads();
+#endif
+    
 	KE::Debugger::print("Hello World.");
 
 	{
